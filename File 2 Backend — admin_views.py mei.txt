@@ -1,0 +1,246 @@
+ File 2: Backend — admin_views.py mein Result Upload Update
+
+I need a complete Flutter frontend for a gaming tournament app like WinZO.
+
+PROJECT: Kuberaa — Free Fire tournament app
+BACKEND: Django REST API at http://127.0.0.1:8000
+AUTH: JWT tokens (Bearer)
+FOLDER: C:\Kuberaa\Frontend\kuberaa_app\lib\
+
+═══════════════════════════════════════════════════════════
+EXISTING FILES (already in project)
+═══════════════════════════════════════════════════════════
+
+✅ home_screen.dart
+✅ profile_screen.dart
+✅ match_list_screen.dart
+✅ tournament_detail_screen.dart
+✅ payment_app_chooser_screen.dart
+✅ payment_screenshot_screen.dart
+✅ match_room_screen.dart
+✅ payment_history_screen.dart
+✅ notifications_screen.dart
+✅ edit_profile_screen.dart
+
+═══════════════════════════════════════════════════════════
+MISSING FILES (need complete code)
+═══════════════════════════════════════════════════════════
+
+1. user_result_screen.dart        → Single result detail (WinZO style)
+2. user_result_list_screen.dart   → Results list with filters
+3. user_settings_screen.dart      → Profile, UPI, mobile settings
+4. help_support_screen.dart       → Email support + FAQ
+5. withdrawal_history_screen.dart → Prize payment history
+6. live_match_screen.dart         → Live match with countdown
+
+═══════════════════════════════════════════════════════════
+API ENDPOINTS (backend already has these)
+═══════════════════════════════════════════════════════════
+
+GET  /api/results/my-results/       → User's own results
+GET  /api/results/match/{id}/       → Match leaderboard
+GET  /api/results/stats/            → User stats (winnings, kills, matches)
+GET  /api/payments/my-uploads/      → Payment history
+GET  /api/payments/fraud-status/    → Account status + fraud warnings
+POST /api/payments/upload/          → Upload payment screenshot
+GET  /api/tournaments/              → All tournaments
+GET  /api/tournaments/{id}/         → Tournament detail
+POST /api/tournaments/{id}/register/→ Register
+GET  /api/matches/my-matches/       → User's matches
+GET  /api/notifications/            → User notifications
+
+═══════════════════════════════════════════════════════════
+REQUIREMENTS — user_result_screen.dart
+═══════════════════════════════════════════════════════════
+
+WinZO-style result view:
+
+UI ELEMENTS:
+- Big "🏆 JEET GAYE!" or "🎮 Match Complete" header
+- Trophy/medal icon based on placement (1st/2nd/3rd/other)
+- Stats grid (2x2):
+  * KILLS — big number
+  * PLACEMENT — #1, #2, etc.
+  * SCORE — total
+  * PRIZE — ₹ amount (green if >0)
+- Prize breakdown card:
+  * Kill Points: 8 × ₹10 = ₹80
+  * 1st Place Bonus: ₹200
+  * Total: ₹280
+- Share button → copy result text to clipboard
+- "Play Again" button → back to tournaments
+- Sound effects (success on load)
+- Confetti animation if won
+
+DATA FROM API:
+{
+  "id": "...",
+  "match_title": "Free Fire Cup",
+  "tournament_title": "Solo Cup #1",
+  "player_name": "Rahul",
+  "kills": 8,
+  "placement": 1,
+  "score": 85,
+  "prize_amount": 280.0,
+  "is_paid": true,
+  "created_at": "2026-09-22T20:00:00Z"
+}
+
+═══════════════════════════════════════════════════════════
+REQUIREMENTS — user_result_list_screen.dart
+═══════════════════════════════════════════════════════════
+
+Results list:
+- Filter tabs: ALL / WON / LOST / PAID / PENDING
+- Stats header:
+  * Total Winnings: ₹1,250
+  * Total Kills: 45
+  * Total Matches: 12
+  * Wins: 3
+- Result cards with:
+  * Match name + date
+  * Kills, Placement, Prize
+  * PAID / PENDING badge
+  * Tap → user_result_screen.dart
+- Empty state: "Abhi koi result nahi"
+- Pull to refresh
+- Shimmer loading
+
+═══════════════════════════════════════════════════════════
+REQUIREMENTS — user_settings_screen.dart
+═══════════════════════════════════════════════════════════
+
+Settings screen with sections:
+
+PROFILE:
+- Display name (edit)
+- Email (read-only)
+- Save button
+
+GAME DETAILS:
+- Free Fire UID (edit)
+- Free Fire Name (edit)
+- Save button
+
+PAYMENT:
+- Mobile number (edit)
+- UPI ID (edit)
+- Verified badge
+- Save button
+
+PREFERENCES:
+- Sound effects toggle
+- Notifications toggle
+- Dark mode (default true)
+
+ACCOUNT:
+- Change password
+- Delete account (danger zone, red)
+
+═══════════════════════════════════════════════════════════
+REQUIREMENTS — help_support_screen.dart
+═══════════════════════════════════════════════════════════
+
+Support screen:
+
+CONTACT:
+- Email: support@kuberaa.com (tap to copy)
+- WhatsApp: +91 98765 43210 (tap to open)
+- Telegram: @kuberaa_support
+
+FAQ (expandable tiles):
+1. Payment verify nahi hua?
+2. Prize kab milega?
+3. Room ID nahi mila?
+4. Account suspend kyun hua?
+5. Refund policy kya hai?
+6. Kya UPI ID change kar sakte hain?
+
+TROUBLESHOOTING:
+- Screenshot upload nahi ho raha
+- App crash ho raha hai
+- Login nahi ho raha
+
+═══════════════════════════════════════════════════════════
+REQUIREMENTS — withdrawal_history_screen.dart
+═══════════════════════════════════════════════════════════
+
+Prize payment history:
+
+- List of paid results:
+  * Match name
+  * Date paid
+  * Amount
+  * UPI ID used
+- Total paid amount at top
+- Filter by month
+- Empty state if no payments
+- Export to CSV option
+
+═══════════════════════════════════════════════════════════
+REQUIREMENTS — live_match_screen.dart
+═══════════════════════════════════════════════════════════
+
+Live match screen:
+
+- Match info (tournament title, match number)
+- Countdown timer to match start (live seconds)
+- Room ID + Password reveal:
+  * If > 5 min: "Room will reveal 5 min before"
+  * If < 5 min: Show room ID + password with copy buttons
+  * If expired: "Contact admin"
+- Your UID confirmation badge
+- Participants list (avatars + names)
+- Match rules (expandable)
+- Auto-refresh every 30 sec
+- Sound when room reveals
+
+═══════════════════════════════════════════════════════════
+DESIGN SYSTEM
+═══════════════════════════════════════════════════════════
+
+Colors (from AppColors):
+- primary: #6C5CE7 (purple)
+- success: #00B894 (green)
+- warning: #FDCB6E (yellow)
+- error: #E74C3C (red)
+- info: #74B9FF (blue)
+- background: #0F0F23 (dark)
+- card: #1A1A2E
+- surface: #16162A
+- cardLight: #252540
+- textPrimary: #FFFFFF
+- textSecondary: #A0A0B0
+- textTertiary: #606070
+
+Gradients:
+- primaryGradient: [#6C5CE7, #A29BFE]
+- successGradient: [#00B894, #55EFC4]
+- warningGradient: [#FDCB6E, #F39C12]
+- infoGradient: [#74B9FF, #0984E3]
+
+PATTERNS:
+- SoundService.playClick() on all taps
+- HapticFeedback.lightImpact() on taps
+- flutter_animate for entrances
+- shimmer for loading
+- Rounded corners: 12-20px
+- Padding: 16px default
+
+═══════════════════════════════════════════════════════════
+DELIVERABLES
+═══════════════════════════════════════════════════════════
+
+For EACH of the 6 files:
+1. Complete Dart code (no placeholders)
+2. All imports
+3. API integration with error handling
+4. Loading states
+5. Empty states
+6. Sound effects
+7. Haptic feedback
+8. Animations
+9. Hinglish user-facing messages
+10. Comments explaining key parts
+
+Write production-ready code.

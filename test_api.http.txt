@@ -1,0 +1,31 @@
+### Register
+POST http://127.0.0.1:8000/api/auth/register/
+Content-Type: application/json
+
+{
+  "email": "test@kuberaa.com",
+  "password": "Test@12345",
+  "display_name": "Test User",
+  "mobile_number": "9876543210"
+}
+
+### Login
+POST http://127.0.0.1:8000/api/auth/login/
+Content-Type: application/json
+
+{
+  "email": "test@kuberaa.com",
+  "password": "Test@12345"
+}
+
+### Password Reset Request
+POST http://127.0.0.1:8000/api/auth/password-reset/request/
+Content-Type: application/json
+
+{
+  "email": "test@kuberaa.com"
+}
+
+### Get Profile (needs token)
+GET http://127.0.0.1:8000/api/profile/
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
